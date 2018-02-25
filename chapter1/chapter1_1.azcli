@@ -1,0 +1,17 @@
+#/bin/bash
+
+# Login
+#az login
+
+# Create resource group
+resourceGroupName="mnt-cli-resourcegroup"
+location="WestEurope"
+az group create --name $resourceGroupName --location $location
+
+# Create an app service plan
+appServicePlanName="mnt-cli-appserviceplan"
+az appservice plan create --name $appServicePlanName --resource-group $resourceGroupName --location $location --sku S1 --number-of-workers 1
+
+# Create web app
+webappName="mnt-cli-webapp"
+az webapp create --name $webappName --resource-group $resourceGroupName --plan $appServicePlanName
