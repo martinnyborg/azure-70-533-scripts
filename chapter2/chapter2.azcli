@@ -43,16 +43,31 @@ nsgName="ubuntu-cli-nsg"
 az network nsg create --name $nsgName --location $location --resource-group $rgName
 
 # Create a SSH network rule
-az network nsg rule create --name "SSH"  \
---description "SSH Access" \ 
---resource-group $rgName \
---location
---source-port-ranges "*" \
---source-address-prefixes "*" \
---destination-port-ranges "22" \
---destination-address-prefixes "*" \
---access Allow \
---direction Inbound \
---nsg-name $nsgName \
---priority 100 \ 
---protocol Tcp 
+az network nsg rule create --name "SSH" --description "SSH Access" --resource-group $rgName --nsg-name $nsgName --source-port-ranges "*" --source-address-prefixes "*" --destination-port-ranges "22" --destination-address-prefixes "*" --access Allow --direction Inbound --priority 100 --protocol Tcp 
+
+# Create a HTTP network rule
+az network nsg rule create --name "HTTP" --description "HTTP Access" --resource-group $rgName --nsg-name $nsgName --source-port-ranges "*" --source-address-prefixes "*" --destination-port-ranges "80" --destination-address-prefixes "*" --access Allow --direction Inbound --priority 101 --protocol Tcp 
+
+# Create network interface 
+networkInterfaceName="ubuntu-cli-nic"
+az network nic create --name $networkInterfaceName --resource-group $rgName --subnet $subnet1Name --location $location --network-security-group $nsgName --public-ip-address $publicIpName --vnet-name $vnetName 
+
+# View images 
+# az vm image list
+# View custom images with 
+# az image list
+# View image sizes with
+# az vm list-sizes --location $location
+
+# Create the virtual machine
+imageName="Canonical:UbuntuServer:16.04-LTS:latest"
+vmSize="Standard_DS1_V2"
+containerName="vhds"
+user="demouser"
+vmName="WebVM"
+osDiskName="WebVM-OSDISK.vhd"
+az vm create --name $vmName --location $location --resource-group $rgName --size $vmSize --availability-set $availabilitySetName --nics $networkInterfaceName --image $imageName --use-unmanaged-disk --os-disk-name $osDiskName --storage-account $storageAccountName --storage-container-name $containerName --generate-ssh-keys
+
+# Get assigned public ip
+#ip=$(az network public-ip show --resource-group $rgName --name $publicIpName)
+#ipAddr=$(echo $ip | jq -r '.ipAddress')
