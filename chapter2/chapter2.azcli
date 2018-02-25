@@ -1,0 +1,58 @@
+#/bin/bash
+# az login
+
+rgName="ubuntu-cli-rg"
+location="WestEurope"
+# az group delete --name $rgName
+az group create --name $rgName --location $location
+
+# Creating a simple virtual machine (everything default configured)
+#vmName="myUbuntuVM"
+#imageName="UbuntuLTS"
+#az vm create --resource-group $rgName --name $vmName --image $imageName --generate-ssh-keys
+
+# The following steps create a customized virtual machine
+# Create a virtual network
+vnetName="ubuntu-cli-vnet"
+vnetAddressPrefix="10.0.0.0/16"
+az network vnet create --resource-group $rgName --name $vnetName --address-prefixes $vnetAddressPrefix --location $location
+
+# Create subnets
+subnet1Name="Subnet-1"
+subnet2Name="Subnet-2"
+subnet1AddressPrefix="10.0.1.0/24"
+subnet2AddressPrefix="10.0.0.0/24"
+az network vnet subnet create --resource-group $rgName --vnet-name $vnetName --name $subnet1Name --address-prefix $subnet1AddressPrefix
+az network vnet subnet create --resource-group $rgName --vnet-name $vnetName --name $subnet2Name --address-prefix $subnet2AddressPrefix
+
+# Create storage account
+storageAccountName="ubuntuclistorageacc"
+az storage account create --name $storageAccountName --resource-group $rgName --sku Standard_LRS --location $location --kind Storage
+
+# Create availability set
+availabilitySetName="ubuntu-cli-availability-set"
+az vm availability-set create --name $availabilitySetName --resource-group $rgName --location $location --platform-fault-domain-count 3 --platform-update-domain-count 5 --unmanaged 
+
+# Create a public ip
+publicIpName="ubuntu-cli-public-ip"
+dnsName="ubuntu-cli"
+az network public-ip create --name $publicIpName --resource-group $rgName --location $location --sku Basic --dns-name $dnsName --allocation-method Dynamic 
+
+# Create a network security group
+nsgName="ubuntu-cli-nsg"
+az network nsg create --name $nsgName --location $location --resource-group $rgName
+
+# Create a SSH network rule
+az network nsg rule create --name "SSH"  \
+--description "SSH Access" \ 
+--resource-group $rgName \
+--location
+--source-port-ranges "*" \
+--source-address-prefixes "*" \
+--destination-port-ranges "22" \
+--destination-address-prefixes "*" \
+--access Allow \
+--direction Inbound \
+--nsg-name $nsgName \
+--priority 100 \ 
+--protocol Tcp 
