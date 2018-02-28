@@ -1,0 +1,9 @@
+#az login
+
+# Create a resource group
+rgName="linux-templ-cli-rg"
+location="WestEurope"
+az group create --name $rgName --location $location
+
+# Deploy template from file
+az group deployment create --name "SimpleVMDeployment" --resource-group $rgName --template-file template.json --parameters parametersFile.json 
