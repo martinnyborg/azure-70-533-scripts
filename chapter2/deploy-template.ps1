@@ -18,3 +18,8 @@ $deploymentName = "\\Mac\iCloud\Azure\chapter2simpleVMDeployment"
 $templateFile = "\\Mac\iCloud\Azure\chapter2\template.json"
 $parametersFile = "parametersFile.json"
 New-AzureRmResourceGroupDeployment -Name $deploymentName -ResourceGroupName $rgName -TemplateFile $templateFile -TemplateParameterFile $parametersFile
+
+# Get and launch RDP file
+Get-AzureRmRemoteDesktopFile -ResourceGroupName $rgName -Name $deploymentName -Launch
+#$path  = "C:"
+#Get-AzureRmRemoteDesktopFile -ResourceGroupName $serviceName -Name $deploymentName -LocalPath $path
