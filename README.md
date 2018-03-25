@@ -1,1 +1,1 @@
-Powershell and Azure cli scripts for 70-533
+Notes and Powershell/Azure cli scripts for 70-533
