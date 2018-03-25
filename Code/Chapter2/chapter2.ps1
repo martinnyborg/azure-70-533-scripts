@@ -1,4 +1,4 @@
-﻿Login-AzAccount
+﻿#Login-AzAccount
 
 # Create a resource group for the VM
 $resourceGroupName = "mnt-ps-ubuntu-serv-rg"
