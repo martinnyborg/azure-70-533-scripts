@@ -10,11 +10,7 @@
 \section{Introduction}
 WIP
 
-\paragraph{Outline}
-WIP
-
-\section{Chapter 1}
-
+\section{Chapter 1: Design and implement Azure App Service Web Apps}
 
 \section{Chapter 2: Create and manage Compute Resources}
 
@@ -53,17 +49,17 @@ An Azure Storage account can be one of three types:
 Azure VMs use three types of disks:
 \begin{itemize}
     
-    \item Operating System Disk (OS Disk) The C drive in Windows or /dev/sda on Linux. This disk is registered as an SATA drive and has a maximum capacity of 2048 gigabytes (GB). This disk is persistent and is stored in Azure storage.
-    \item Temporary Disk The D drive in Windows or /dev/sdb on Linux. This disk is used for short term storage for applications or the system. Data on this drive can be lost in dur- ing a maintenance event, or if the VM is moved to a different host because the data is stored on the local disk.
-    \item Data Disk Registered as a SCSI drive. These disks can be attached to a virtual machine, the number of which depends on the VM instance size. Data disks have a maximum capacity of 4095 gigabytes (GB). These disks are persistent and stored in Azure Storage.
+    \item \textbf{Operating System Disk (OS Disk)}: The C drive in Windows or /dev/sda on Linux. This disk is registered as an SATA drive and has a maximum capacity of 2048 gigabytes (GB). This disk is persistent and is stored in Azure storage.
+    \item \textbf{Temporary Disk}: The D drive in Windows or /dev/sdb on Linux. This disk is used for short term storage for applications or the system. Data on this drive can be lost in dur- ing a maintenance event, or if the VM is moved to a different host because the data is stored on the local disk.
+    \item \textbf{Data Disk Registered as a SCSI drive}: These disks can be attached to a virtual machine, the number of which depends on the VM instance size. Data disks have a maximum capacity of 4095 gigabytes (GB). These disks are persistent and stored in Azure Storage.
 There are two types of disks in Azure: Managed or Unmanaged.
 \end{itemize}
 
 \subsubsection{Azure disks - Unmanaged and Managed}
 There are two types of disks in Azure: Managed or Unmanaged.
 \begin{itemize}
-    \item Unmanaged disks With unmanaged disks you are responsible for ensuring for the correct distribution of your VM disks in storage accounts for capacity planning as well as availability. An unmanaged disk is also not a separate manageable entity. This means that you cannot take advantage of features like role based access control (RBAC) or resource locks at the disk level.
-    \item Managed disks Managed disks handle storage for you by automatically distrib- uting your disks in storage accounts for capacity and by integrating with Azure Availability Sets to provide isolation for your storage just like availability sets do for virtual machines. Managed disks also makes it easy to change between Standard and Premium storage (HDD to SSD) without the need to write conversion scripts.
+    \item \textbf{Unmanaged disks}: With unmanaged disks you are responsible for ensuring for the correct distribution of your VM disks in storage accounts for capacity planning as well as availability. An unmanaged disk is also not a separate manageable entity. This means that you cannot take advantage of features like role based access control (RBAC) or resource locks at the disk level.
+    \item \textbf{Managed disks}: Managed disks handle storage for you by automatically distrib- uting your disks in storage accounts for capacity and by integrating with Azure Availability Sets to provide isolation for your storage just like availability sets do for virtual machines. Managed disks also makes it easy to change between Standard and Premium storage (HDD to SSD) without the need to write conversion scripts.
 \end{itemize}
 
 
